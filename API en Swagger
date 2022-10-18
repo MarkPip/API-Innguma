@@ -1,0 +1,206 @@
+openapi: 3.0.0
+info:
+  version: 4.0.0
+  title: Innguma API
+  description: Esta Api Permite obtener información sobre el uso de la App de Innguma
+  termsOfService: https://www.innguma.com/
+  contact:
+    name: Marcos Pipan
+    url: https://linkedin.com/in/marcospipan/
+    email: marcospipan@gmail.com
+    
+tags:
+  - name: Lector
+    description: Toda la información y estadisticas acerca de tus lectores.
+  - name: Categoria
+    description: Toda la información sobre las categorias.
+      
+paths:
+  /lector/:
+    get:
+      tags:
+        - Lector
+      summary: Encuentra el lector por su ID o su nombre
+      parameters: 
+        - in: query
+          name: id
+          required: false
+          description: Ingrese el código de lector
+          schema:
+            type: number
+            example: 1
+        - in: query
+          name: lector
+          required: false
+          description:  Ingrese el Nombre de lector
+          schema:
+            type: string
+            example: Jose Perez    
+      responses:
+        200:
+          description: Successful request - La petición ha sido exitosa!
+          content:
+            application/json:
+              schema:
+                 $ref: '#/components/schemas/lector_request'
+            application/xml:
+              schema:
+                 $ref: '#/components/schemas/lector_request'    
+        400:
+          description: Los parámetros de entradas esperados son incorrectos.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Bad request
+        404:
+          description: El recurso solicitado no existe.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Request not found.
+        500:
+          description: Error inesperado de servidor.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Internal server error.
+                
+  /categoria/:
+    get:
+      tags:
+        - Categoria
+      summary: Encuentra la categoria por su ID o nombre
+      parameters: 
+        - in: query
+          name: idcategoria
+          required: false
+          description: Ingrese el código de categoria
+          schema:
+            type: number
+            example: 1
+        - in: query
+          name: categoria
+          required: false
+          description:  Ingrese el nombre de la categoria 
+          schema:
+            type: string
+            example: Economía    
+      responses:
+        200:
+          description: Successful request - La petición ha sido exitosa!
+          content:
+            application/json:
+              schema:
+                 $ref: '#/components/schemas/categoria_request'
+            application/xml:
+              schema:
+                 $ref: '#/components/schemas/categoria_request'    
+        400:
+          description: Los parámetros de entradas esperados son incorrectos.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Bad request
+        404:
+          description: El recurso solicitado no existe.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Request not found.
+        500:
+          description: Error inesperado de servidor.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Internal server error.                
+                
+components:
+  schemas:
+    lector_request:
+      title: Modelo de datos para cada opción
+      required:
+
+      - id
+      - nombre
+      - ultimaconexion
+      - accesostotales
+      - temarecurrente
+      - numdocsdescargados
+      - ultimavotacion
+      
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 4
+        nombre:
+          type: string
+          example: jose
+        ultimaconexion:
+          type: string
+          example: 00.45.35
+        accesostotales:
+          type: integer
+          example: 2455
+        temarecurrente:
+          type: string
+          example: politica
+        numdocsdescargados:
+          type: integer
+          example: 30
+        ultimavotacion:
+          type: string
+          example: 00.45.35
+          
+    categoria_request:
+      title: Modelo de datos para cada opción
+      required:
+
+      - idcategoria
+      - fechacreacion
+      - cantidadvisitas
+      - votosxcateg
+      - itemsmasvistos
+      - cantdocdescarg
+      - categoria
+      
+      type: object
+      properties:
+        idcategoria:
+          type: integer
+          format: int32
+          example: 4
+        fechacreacion:
+          type: string
+          example: 00.45.35
+        cantidadvisitas:
+          type: integer
+          example: 346
+        votosxcateg:
+          type: integer
+          example: 2455
+        itemsmasvistos:
+          type: integer
+          example: 76
+        cantdocdescarg:
+          type: integer
+          example: 306
+        categoria:
+          type: string
+          example: Machine Learning
+          
+ 
+
+        
+servers:
+
+    
+  - description: Mocking api inngu
+    url: https://62c32e97876c4700f5381e76.mockapi.io/v1/readers/
